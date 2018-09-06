@@ -28,10 +28,19 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	public void train(String sourceText)
 	{	// split sourceText into array words
 		// starter = words[0]
-		// for each word at i
+		// add words[1] as nextWord to starter
+		// create a listNode for starter, 
+		// add startNode to wordsList
+		
+		// for each word start at 1
 		// check wordList contains the node with currWord or not
-		// if not, create node, add word[i+1] into nextWord, put the node into wordList. 
-		// else put words[i+1] into the found node's nextWord list property
+		// if not, create node, 
+		//		if it not last word, add word[i+1] into nextWord,
+		//      else add word[0] into nextWord, 
+		//      put the node into wordList. 
+		// else 
+		// 		if it not last word, add word[i+1] into nextWord,
+		//      else add word[0] into nextWord
 		String[] words = sourceText.split(" +" );
 //		for (String word:words){
 //			System.out.println(word);
@@ -66,6 +75,8 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	 */
 	@Override
 	public String generateText(int numWords) {
+		String res ="";
+		
 	   
 		return null;
 	}
@@ -165,8 +176,8 @@ class ListNode
 	
 	public String getRandomNextWord(Random generator)
 	{
-
-	    return null;
+		int randomInd = generator.nextInt(nextWords.size());
+	    return nextWords.get(randomInd);
 	}
 
 	public String toString()
