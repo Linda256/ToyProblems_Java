@@ -26,8 +26,39 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	/** Train the generator by adding the sourceText */
 	@Override
 	public void train(String sourceText)
-	{
-		
+	{	// split sourceText into array words
+		// starter = words[0]
+		// for each word at i
+		// check wordList contains the node with currWord or not
+		// if not, create node, add word[i+1] into nextWord, put the node into wordList. 
+		// else put words[i+1] into the found node's nextWord list property
+		String[] words = sourceText.split(" +" );
+//		for (String word:words){
+//			System.out.println(word);
+//		}
+		starter = words[0];
+		ListNode startNode = new ListNode(starter);
+		startNode.addNextWord(words[1]);
+		wordList.add(startNode);
+		int len=words.length-1;
+		for (int i=1;i<len;i++){
+			boolean found = false;
+			for (ListNode aNode : wordList){
+				if (words[i].equals(aNode.getWord())){
+					if(i != len-1)  aNode.addNextWord(words[i+1]);
+					else aNode.addNextWord(starter);
+				found=true;
+				break;
+				}
+			}
+			if (found==false){
+				ListNode aNode = new ListNode(words[i]);
+				if(i != len-1) aNode.addNextWord(words[i+1]);
+				else aNode.addNextWord(starter);
+				wordList.add(aNode);
+			}
+		}
+			
 	}
 	
 	/** 
@@ -73,6 +104,7 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 		System.out.println(textString);
 		gen.train(textString);
 		System.out.println(gen);
+		System.out.println("gen is trained: "+ gen.toString());
 		System.out.println(gen.generateText(20));
 		String textString2 = "You say yes, I say no, "+
 				"You say stop, and I say go, go, go, "+
