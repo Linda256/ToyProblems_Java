@@ -76,9 +76,17 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	@Override
 	public String generateText(int numWords) {
 		String res ="";
-		
-	   
-		return null;
+		String currWord = starter;
+		for (int n=0;n<numWords;n++){
+			res += " "+ currWord;
+			for (ListNode node : wordList){
+				if (node.getWord().equals(currWord)){
+					currWord=node.getRandomNextWord(rnGenerator);
+					break;
+				}
+			}	
+		}
+		return res;
 	}
 	
 	
@@ -98,10 +106,9 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	@Override
 	public void retrain(String sourceText)
 	{
-		
+		wordList.clear();
+		train(sourceText);
 	}
-	
-
 	
 	
 	/**   
@@ -144,7 +151,7 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 		System.out.println(textString2);
 		gen.retrain(textString2);
 		System.out.println(gen);
-		System.out.println(gen.generateText(20));
+		System.out.println(gen.generateText(50));
 	}
 
 }
