@@ -76,11 +76,22 @@ public class arrRotation {
         return result;
     }
 	
+	public int[] solution2(int[] A, int K) {
+        // write your code in Java SE 8
+		if (A.length<2) return A;
+        int len = A.length;
+        if (K>len) K=K%len;
+        int[] result = new int[len];
+        System.arraycopy(A,2,result,0,K);
+        System.arraycopy(A,0,result,K,len-K);
+        return result;
+    }
+	
 	public static void main(String[] args){
 		int[] A ={3, 8, 9, 7, 6};
 		int K =3;
 		arrRotation a= new arrRotation();
-		int[] result=a.solution(A, K);
+		int[] result=a.solution2(A, K);
 		System.out.println(Arrays.toString(result));
 	}
 }
